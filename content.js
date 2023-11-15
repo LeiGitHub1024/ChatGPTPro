@@ -1,12 +1,11 @@
 // 确保文档加载完毕
 console.log('1');
 
-  console.log('2');
-  
-  let lastMessage = '';
-  // 获取ID为'prompt-textarea'的textarea元素
-  const textarea = document.getElementById('prompt-textarea');
+let lastMessage = '';
 
+function monkey() {
+   // 获取ID为'prompt-textarea'的textarea元素
+  const textarea = document.getElementById('prompt-textarea');
   // 检查textarea是否存在
   if (textarea) {
       // 为textarea添加input事件监听器
@@ -14,14 +13,11 @@ console.log('1');
           // 当textarea的内容改变时，打印出其内容
         console.log('Textarea内容变化:', textarea.value);
         lastMessage = textarea.value;
-        
       });
   } else {
       console.error('未找到ID为 prompt-textarea 的元素');
   }
 
-
-function monkey() {
   const targetDiv = document.querySelector('div.group.fixed.bottom-3.right-3.z-10.hidden.gap-1.lg\\:flex');
   if (targetDiv) {
       // 创建一个新按钮
