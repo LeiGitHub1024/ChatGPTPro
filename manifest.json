@@ -4,7 +4,7 @@
   "description": "This extension enhances the ChatGPT web interface by adding a character count feature below the message input.",
   "version": "1.0",
   "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["https://chat.openai.com/*"],
+  "host_permissions": ["https://chat.openai.com/*","https://tingxie.sankuai.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -19,7 +19,17 @@
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/*"],
-      "js": ["content.js"]
+      "js": ["./js/gpt.js"]
+    },
+    {
+      "matches": ["https://tingxie.sankuai.com/*"],
+      "js": ["./js/tingxie.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html", "./js/popup.js"],
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {

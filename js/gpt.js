@@ -1,5 +1,5 @@
 // 确保文档加载完毕
-console.log('1');
+console.log('祥语插件启动——gpt');
 
 let lastMessage = '';
 
