@@ -16,6 +16,8 @@ function heighlightAndCount() {
     return;
   }
   let speakerCounts = {};
+  let speakerSentences = {};
+
 
   speakers.forEach(speaker => {
     const spans = speaker.querySelectorAll('.edit-content-editor-text');
@@ -23,7 +25,10 @@ function heighlightAndCount() {
 
     if (!speakerCounts[speakerName]) {
       speakerCounts[speakerName] = 0;
+      speakerSentences[speakerName] = 0;
+
     }
+    speakerSentences[speakerName]++;
 
     for (let i = 0; i < spans.length - 1; i++) {
       const combinedText = spans[i].textContent + spans[i + 1].textContent;
@@ -37,14 +42,37 @@ function heighlightAndCount() {
 
   addHeighlightStyle();
 
-  // 新增：生成报告并下载
   let report = `报告URL: ${window.location.href}\n`;
   report += `共记录了 ${document.querySelectorAll('.highlight').length/2} 个 '然后'\n`
-  report += `详细数据如下：\n\n`
+  report += `详细数据如下：\n\n`;
+
+  report += '说话人\t平均每段"然后"数\t"然后"个数\t说话段数\n';
+
+  let maxThenCount = 0;
+  let maxSpeaker = '';
+  let maxAverage = 0
 
   for (const speaker in speakerCounts) {
-    report += `${speaker}: '然后' 出现次数: ${speakerCounts[speaker]}\n`;
+      if(!speaker || speaker=='unknown'){continue}
+      let average = (speakerCounts[speaker] / speakerSentences[speaker]).toFixed(2);
+      let sentenceCount = speakerSentences[speaker].toString();
+      let count = speakerCounts[speaker].toString();
+
+      report += speaker.padEnd(10); // 假设"说话人"字段最宽10个字符
+      report += average.padEnd(15); // 假设"平均每段'然后'"字段最宽15个字符
+      report += count.padEnd(15); // 假设"'然后'个数"字段最宽10个字符
+      report += sentenceCount.padEnd(10); // 假设"说话段数"字段最宽10个字符
+      report += '\n';
+
+      if (count > maxThenCount) {
+        maxThenCount = count;
+        maxSpeaker = speaker;
+        maxAverage = average;
+      }
   }
+  
+  report += `\n\n"然后”冠军是：${maxSpeaker},说了 ${maxThenCount} 次"然后",平均每段话 ${maxAverage} 个"然后"`
+  
   if (document.querySelectorAll('.highlight').length / 2 == 0) {
     return 
   }
