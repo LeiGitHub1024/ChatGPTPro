@@ -11,11 +11,15 @@ setTimeout(() => {
 
 function heighlightAndCount() {
   const speakers = document.querySelectorAll('.edit-content-editor-block');
+  if (!speakers) {
+    console.log('没找到听写内容，直接退出');
+    return;
+  }
   let speakerCounts = {};
 
   speakers.forEach(speaker => {
     const spans = speaker.querySelectorAll('.edit-content-editor-text');
-    const speakerName = speaker.querySelector('.edit-content-editor-speaker-name').textContent.trim();
+    const speakerName = speaker.querySelector('.edit-content-editor-speaker-name')?.textContent.trim() || 'unknown';
 
     if (!speakerCounts[speakerName]) {
       speakerCounts[speakerName] = 0;
